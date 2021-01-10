@@ -1,0 +1,13 @@
+{
+  "name": "Floating-Chat-Client",
+  "version": "0.0.1",
+  "description": "A client made in electron.js for Floating Chat",
+  "main": "index.js",
+  "repository": "https://github.com/Floating-Chat/Floating-Chat-Client.git",
+  "author": "HidekiHrk <hidekihiroki123@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "electron": "^11.1.1"
+  }
+}
