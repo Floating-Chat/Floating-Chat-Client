@@ -1,5 +1,7 @@
 const nameserver = 'localhost';
 const port = 8765;
+// const nameserver = 'floating-chat-test.herokuapp.com';
+// const port = 80;
 
 const wsClient = new WebSocket(`ws://${nameserver}:${port}`);
 

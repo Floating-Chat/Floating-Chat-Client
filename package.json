@@ -4,6 +4,9 @@
   "description": "A client made in electron.js for Floating Chat",
   "main": "index.js",
   "repository": "https://github.com/Floating-Chat/Floating-Chat-Client.git",
+  "scripts":{
+    "start": "electron ."
+  },
   "author": "HidekiHrk <hidekihiroki123@gmail.com>",
   "license": "MIT",
   "private": false,

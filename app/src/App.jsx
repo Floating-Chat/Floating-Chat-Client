@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Router from './routes';
 import GlobalStyle from './utils/globalStyle';
 
+import { DraggableMenu } from './styles';
+
 import ws from './utils/websockets';
 
 export const Context = React.createContext({ name: [null, null], color: [null, null] });
@@ -26,6 +28,7 @@ function App() {
     return (
         <Context.Provider value={contextObject}>
             <GlobalStyle/>
+            <DraggableMenu />
             {connected && <Router/>}
         </Context.Provider>
     );

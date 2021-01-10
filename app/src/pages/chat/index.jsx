@@ -13,9 +13,9 @@ const Message = (props) => {
         <FlexDiv>
             <MessageContent border messageColor={userColor}>{userName}</MessageContent>:
             &nbsp;&nbsp;
-            <MessageContent width="600px">{content}</MessageContent>
+            <MessageContent width="90%" border messageColor="white">{content}</MessageContent>
         </FlexDiv>
-        <MessageContent>{time}</MessageContent>
+        <MessageContent border messageColor="white">{time}</MessageContent>
     </MessageBody>
 
 }
@@ -23,33 +23,49 @@ const Message = (props) => {
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState("");
+    const [focused, setFocused] = useState(false);
     const { name } = useContext(Context);
     const [userName] = name;
 
     const history = useHistory();
+
+    const messageBoxRef = React.createRef();
 
     useEffect(() => {
         if(!userName){
             history.push('/');
         }
         const registered = ws.on('message', (data) => {
-            console.log(data);
+            // console.log(data);
             switch(data.type){
                 case "receive_message":
                     addMessage(data.message);
                     break;
                 case "user_connected":
-                    const name = data.info.name;
+                    const ucname = data.info.name;
                     const ucMessage = {
                         id: new Date().getMilliseconds(),
                         user: {
                             name: "Server",
                             color: "#bb99ff",
                         },
-                        content: `User ${name} joined the chat.`,
+                        content: `User ${ucname} joined the chat.`,
                         time: parseInt(Date.now()),
                     }
                     addMessage(ucMessage);
+                    break;
+                case "user_disconnected":
+                    const udname = data.info.name;
+                    const udMessage = {
+                        id: new Date().getMilliseconds(),
+                        user: {
+                            name: "Server",
+                            color: "#ff99bb",
+                        },
+                        content: `User ${udname} disconnected.`,
+                        time: parseInt(Date.now()),
+                    }
+                    addMessage(udMessage);
                     break;
                 default:
             }
@@ -58,6 +74,13 @@ const Chat = () => {
             registered.unregister();
         }
     }, []);
+
+    useEffect(() => {
+        const target = messageBoxRef?.current;
+        if(target){
+            target.scrollTo(0, target.scrollHeight);
+        }
+    }, [messages]);
 
     function addMessage(messageObject) {
         messages.push(messageObject);
@@ -94,11 +117,11 @@ const Chat = () => {
         })
     }, [messages]);
 
-    return (<Container onSubmit={submitHandler}>
-        <MessageContainer>
+    return (<Container onSubmit={submitHandler} focused={focused}>
+        <MessageContainer ref={messageBoxRef} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}>
             {messageComponents}
         </MessageContainer>
-        <MessageInputContainer>
+        <MessageInputContainer onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}>
             <MessageInput
                 name="message"
                 placeholder="Type anything..."

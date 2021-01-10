@@ -7,6 +7,11 @@ export const Container = styled.form`
     align-items: center;
     justify-content: flex-end;
     flex-direction: column;
+    background-color: #3339;
+    transition: background-color 0.3s ease;
+    ${(props) => !props.focused && css`
+        background-color: transparent;
+    `}
 `;
 
 export const MessageInputContainer = styled.div`
@@ -22,10 +27,9 @@ export const SubmitButton = styled.button`
     justify-content: center;
     align-items: center;
     border: none;
-    font-size: 16px;
     cursor: pointer;
     width: 100%;
-    background: #ddd;
+    background: #bb99ff;
     color: #333;
     transition: all 0.3s ease;
     outline: none;
@@ -38,7 +42,7 @@ export const SubmitButton = styled.button`
     `}
 
     &:hover {
-        background: #333;
+        background: #fff;
         color: #ddd;
     }
 `;
@@ -58,15 +62,16 @@ export const MessageInput = styled.input`
     outline: none;
     transition: all 0.3s ease;
     caret-color: #bb99ff;
-    color: #9966bb;
     width: 100%;
     height: 40px;
+    color: #fffd;
+    background-color: transparent;
     &:not([value='']) {
         width: calc(100% - 45px);
     }
     
     &::selection {
-        color: #333;
+        color: #fff;
         background-color: #bb99ff;
     }
 
@@ -75,8 +80,12 @@ export const MessageInput = styled.input`
         background-color: #bb99ff;
     }
 
+    &::placeholder {
+        color: #fff8;
+    }
+
     &:focus {
-        border: 1px solid #ee99ff;
+        border: 1px solid #fff;
         border-radius: 0.15rem;
     }
 `;
@@ -88,17 +97,23 @@ export const MessageContainer = styled.div`
     align-items: flex-start;
     width: 100%;
     height: 100%;
-    padding: 20px 50px;
+    padding: 10px 10px;
     overflow-y: scroll;
-`;
+`
 
 export const MessageBody = styled.div`
+    margin-top: 5px;
     display: flex;
-    width: 95%;
-    justify-content: space-between;
+    width: 100%;
+    /* justify-content: space-between; */
     align-items: flex-start;
     * {
-        font-size: 16px;
+        font-size: 14px;
+    }
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    &:hover {
+        background-color: #bb99ff33;
     }
 `;
 
@@ -111,11 +126,12 @@ export const MessageContent = styled.span`
 
     ${(props) => props.border && css`
         letter-spacing: 2px;
-        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        text-shadow: -1px 0 1px #000b, 0 1px 1px #000b, 1px 0 1px #000b, 0 -1px 1px #000b;
     `}
 `
 
 export const FlexDiv = styled.div`
+    flex: 1;
     display: flex;
     justify-content: flex-start;
     width: 50%;
